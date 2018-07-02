@@ -4,11 +4,6 @@
 const express = require('express');
 const proxy = require('express-http-proxy');
 const app = express();
-const bodyParser = require('body-parser');
-const util = require('util');
-const uploader = require('./uploader');
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');

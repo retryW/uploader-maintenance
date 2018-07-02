@@ -15,24 +15,6 @@
 	.note {
 	white-space: pre-line;
 	}
-		.myDiv {
-	display: inline-block;
-	}
-	.myLoader {
-	display: inline-block;
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
-	}
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
   </style>
 
   <!-- js -->
@@ -46,95 +28,24 @@
     <h1 class="title has-text-centered">Codius Pod Upload Tool</h1>
     <div class="box">
 
-      <!-- our hostname form ===================== -->
-      <form id="hostname-form" @submit.prevent="processForm">
-	  
-        <!-- hostname -->
-        <div class="field">
-          <label class="label">Hostname</label>
-          <input 
-            type="text" 
-            class="input" 
-            name="name_hostname"
-            v-model="hostname"
-            @blur="validateHostname"
-			method="post"
-			placeholder="codius.example.com">
-
-          <p class="help is-danger" v-if="errors.hostname">
-            Please enter a valid hostname.
-          </p>
-        </div>
-
-        <!-- submit button -->
-        <div class="field has-text-right">
-          <button type="submit" id="submit_button" v-show="!hasClicked" class="button is-danger">
-            Submit            
-          </button>
-        </div>
-		<div id="myDiv" class="note" v-show="hasClicked" has-text-left>
-			<b>Uploading...</b> (this can take a while)
+      <!-- our returned data ===================== -->
+      <form id="results-form">
+		<div class="field">
+			<h1>
+				<b>Under Maintenance!</b>
+			</h1>
+			<p has-text-left>
+			<pre>This tool is down for maintenance.
+It should be back online shortly :)</pre>
+			</p>
 		</div>
-		<div id="myLoader" class="loader" v-show="hasClicked" has-text-right></div>
+		<div class="field has-text-centered">
+		</div>
       </form>
 
     </div>
   </div>
   </div>
   </div>
-
-  <!-- our javascript -->
-  <script>
-    // vue ==========================================
-    var app = new Vue({
-      el: '#hostname-form',
-      data: {
-        hostname: '',
-		hasClicked: false,
-		receivedOutput: false,
-        errors: {
-          hostname: false
-        }
-      },
-      methods: {
-        processForm: function() {
-		params = this.$data.hostname;
-		method = "post";
-		path = "/";
-		// The rest of this code assumes you are not using a library.
-		// It can be made less wordy if you use one.
-		
-		this.$data.hasClicked = true;
-		
-		var form = document.createElement("form");
-		form.setAttribute("method", method);
-		form.setAttribute("action", path);
-
-			var hiddenField = document.createElement("input");
-			hiddenField.setAttribute("type", "hidden");
-			hiddenField.setAttribute("name", "hostname");
-			hiddenField.setAttribute("value", params);
-
-			form.appendChild(hiddenField);
-
-			document.body.appendChild(form);
-			form.submit();
-		},
-        validateHostname: function() {
-          const isValid = window.isValidHostname(this.hostname);
-          this.errors.hostname = !isValid;
-        },
-      }
-    });
-    // helpers ===============================================
-    /**
-     * Validate Hostname
-     * Not 100% reliable. Just a quick and dirty check.
-     */
-    function isValidHostname(hostname) {
-      var re = /^(([^<>()\[\]\\.,;:\s."]+(\.[^<>()\[\]\\.,;:\s."]+)*)|(".+")).((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(hostname);
-    }
-  </script>
 </body>
 </html>
